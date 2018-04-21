@@ -15,7 +15,7 @@ class GameScene: SKScene {
     var graphs = [String : GKGraph]()
     
     private var lastUpdateTime : TimeInterval = 0
-    private var label : SKLabelNode?
+    private var scoreLabel : SKLabelNode?
     private var ball : SKSpriteNode?
     private var bottomRightBucket : SKSpriteNode?
     private var bottomMiddleBucket : SKSpriteNode?
@@ -23,6 +23,8 @@ class GameScene: SKScene {
     private var topRightBucket : SKSpriteNode?
     private var topMiddleBucket : SKSpriteNode?
     private var topLeftBucket : SKSpriteNode?
+    private var score = 0
+    private var lastBucket:Bucket?
 
     override func sceneDidLoad() {
 
@@ -34,6 +36,8 @@ class GameScene: SKScene {
         topRightBucket = self.childNode(withName: "topRightBucket") as? SKSpriteNode
         topMiddleBucket = self.childNode(withName: "topMiddleBucket") as? SKSpriteNode
         topLeftBucket = self.childNode(withName: "topLeftBucket") as? SKSpriteNode
+        scoreLabel = self.childNode(withName: "scoreLabel") as? SKLabelNode
+        scoreLabel?.text = "Score: \(score)"
         // Get label node from scene and store it for use later
 //        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
 //        if let label = self.label {
@@ -95,18 +99,50 @@ class GameScene: SKScene {
         }
         
         self.lastUpdateTime = currentTime
-        if let ballBody = ball?.physicsBody, let bottomMidBucketBody = bottomMiddleBucket?.physicsBody, let topMidBucketBody = topMiddleBucket?.physicsBody {
-            if ballBody.allContactedBodies().contains(bottomMidBucketBody) || ballBody.allContactedBodies().contains(topMidBucketBody) {
+        guard let count = ball?.physicsBody?.allContactedBodies().count else {
+            lastBucket = nil
+            return
+        }
+        if count > 0 {
+            if let ballBody = ball?.physicsBody, let bottomMidBucketBody = bottomMiddleBucket?.physicsBody, let topMidBucketBody = topMiddleBucket?.physicsBody, let topRightBucketBody = topRightBucket?.physicsBody, let topLeftBucketBody = topLeftBucket?.physicsBody, let bottomLefttBucketBody = bottomLeftBucket?.physicsBody, let bottomRightBucketBody = bottomRightBucket?.physicsBody {
+                var collidedBucketNode:Bucket?
+                switch true {
+                case ballBody.allContactedBodies().contains(topLeftBucketBody):
+                    collidedBucketNode = topLeftBucketBody.node as? Bucket
+                    break
+                case ballBody.allContactedBodies().contains(topMidBucketBody):
+                    collidedBucketNode = topMidBucketBody.node as? Bucket
+                    break
+                case ballBody.allContactedBodies().contains(topRightBucketBody):
+                    collidedBucketNode = topRightBucketBody.node as? Bucket
+                    break
+                case ballBody.allContactedBodies().contains(bottomLefttBucketBody):
+                    collidedBucketNode = bottomLefttBucketBody.node as? Bucket
+                    break
+                case ballBody.allContactedBodies().contains(bottomMidBucketBody):
+                    collidedBucketNode = bottomMidBucketBody.node as? Bucket
+                    break
+                case ballBody.allContactedBodies().contains(bottomRightBucketBody):
+                    collidedBucketNode = bottomRightBucketBody.node as? Bucket
+                    break
+                default:
+                    break
+                }
+                if let foundNode = collidedBucketNode {
+                    if foundNode != lastBucket {
+                        lastBucket = foundNode
+                        score = score + foundNode.pointValue
+                        scoreLabel?.text = "Score: \(score)"
+                    }
+                }
                 let world = self.physicsWorld
                 if world.gravity.dy < CGFloat(0.0) {
-                    world.gravity = CGVector.init(dx: 0.0, dy: 9.8) // CGVectorMake(0.0, 9.8)
+                    world.gravity = CGVector.init(dx: 0.0, dy: 25) // CGVectorMake(0.0, 9.8)
                 } else {
-                    world.gravity = CGVector.init(dx: 0.0, dy: -9.8) // CGVectorMake(0.0, -9.8)
+                    world.gravity = CGVector.init(dx: 0.0, dy: -25) // CGVectorMake(0.0, -9.8)
                 }
-                
             }
         }
-        
     }
 }
 

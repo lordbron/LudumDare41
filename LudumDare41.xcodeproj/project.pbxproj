@@ -17,6 +17,7 @@
 		E249E62F208B423F00CD3C86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E249E62D208B423F00CD3C86 /* LaunchScreen.storyboard */; };
 		E249E63A208B424000CD3C86 /* LudumDare41Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E249E639208B424000CD3C86 /* LudumDare41Tests.swift */; };
 		E249E645208B424000CD3C86 /* LudumDare41UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E249E644208B424000CD3C86 /* LudumDare41UITests.swift */; };
+		E282D503208B98C700AF5179 /* Bucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E282D502208B98C700AF5179 /* Bucket.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		E249E640208B424000CD3C86 /* LudumDare41UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LudumDare41UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E249E644208B424000CD3C86 /* LudumDare41UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LudumDare41UITests.swift; sourceTree = "<group>"; };
 		E249E646208B424000CD3C86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E282D502208B98C700AF5179 /* Bucket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bucket.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				E249E62B208B423F00CD3C86 /* Assets.xcassets */,
 				E249E62D208B423F00CD3C86 /* LaunchScreen.storyboard */,
 				E249E630208B423F00CD3C86 /* Info.plist */,
+				E282D502208B98C700AF5179 /* Bucket.swift */,
 			);
 			path = LudumDare41;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E249E625208B423E00CD3C86 /* GameScene.swift in Sources */,
+				E282D503208B98C700AF5179 /* Bucket.swift in Sources */,
 				E249E627208B423E00CD3C86 /* GameViewController.swift in Sources */,
 				E249E61F208B423E00CD3C86 /* AppDelegate.swift in Sources */,
 			);
