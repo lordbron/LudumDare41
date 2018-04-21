@@ -17,12 +17,12 @@ class GameScene: SKScene {
     private var lastUpdateTime : TimeInterval = 0
     private var scoreLabel : SKLabelNode?
     private var ball : SKSpriteNode?
-    private var bottomRightBucket : SKSpriteNode?
-    private var bottomMiddleBucket : SKSpriteNode?
-    private var bottomLeftBucket : SKSpriteNode?
-    private var topRightBucket : SKSpriteNode?
-    private var topMiddleBucket : SKSpriteNode?
-    private var topLeftBucket : SKSpriteNode?
+    private var bottomRightBucket : Bucket?
+    private var bottomMiddleBucket : Bucket?
+    private var bottomLeftBucket : Bucket?
+    private var topRightBucket : Bucket?
+    private var topMiddleBucket : Bucket?
+    private var topLeftBucket : Bucket?
     private var score = 0
     private var lastBucket:Bucket?
 
@@ -30,14 +30,15 @@ class GameScene: SKScene {
 
         self.lastUpdateTime = 0
         ball = self.childNode(withName: "ballNode") as? SKSpriteNode
-        bottomRightBucket = self.childNode(withName: "bottomRightBucket") as? SKSpriteNode
-        bottomMiddleBucket = self.childNode(withName: "bottomMiddleBucket") as? SKSpriteNode
-        bottomLeftBucket = self.childNode(withName: "bottomLeftBucket") as? SKSpriteNode
-        topRightBucket = self.childNode(withName: "topRightBucket") as? SKSpriteNode
-        topMiddleBucket = self.childNode(withName: "topMiddleBucket") as? SKSpriteNode
-        topLeftBucket = self.childNode(withName: "topLeftBucket") as? SKSpriteNode
+        bottomRightBucket = self.childNode(withName: "bottomRightBucket") as? Bucket
+        bottomMiddleBucket = self.childNode(withName: "bottomMiddleBucket") as? Bucket
+        bottomLeftBucket = self.childNode(withName: "bottomLeftBucket") as? Bucket
+        topRightBucket = self.childNode(withName: "topRightBucket") as? Bucket
+        topMiddleBucket = self.childNode(withName: "topMiddleBucket") as? Bucket
+        topLeftBucket = self.childNode(withName: "topLeftBucket") as? Bucket
         scoreLabel = self.childNode(withName: "scoreLabel") as? SKLabelNode
         scoreLabel?.text = "Score: \(score)"
+        configureStartingLevel()
         // Get label node from scene and store it for use later
 //        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
 //        if let label = self.label {
@@ -59,6 +60,14 @@ class GameScene: SKScene {
 //        }
     }
     
+    func configureStartingLevel() {
+        topMiddleBucket?.bucketType = .simpleNegative
+        bottomMiddleBucket?.bucketType = .simplePositive
+        bottomLeftBucket?.bucketType = .simpleNegative
+        topLeftBucket?.bucketType = .simplePositive
+        bottomRightBucket?.bucketType = .simpleNegative
+        topRightBucket?.bucketType = .simplePositive
+    }
     
     func touchDown(atPoint pos : CGPoint) {
     }
@@ -131,7 +140,7 @@ class GameScene: SKScene {
                 if let foundNode = collidedBucketNode {
                     if foundNode != lastBucket {
                         lastBucket = foundNode
-                        score = score + foundNode.pointValue
+                        score = score + foundNode.scoreValue
                         scoreLabel?.text = "Score: \(score)"
                     }
                 }
