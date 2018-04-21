@@ -20,9 +20,9 @@ class GameScene: SKScene {
     private var bottomRightBucket : SKSpriteNode?
     private var bottomMiddleBucket : SKSpriteNode?
     private var bottomLeftBucket : SKSpriteNode?
-    private var bottomRightBouncer : SKNode?
-    private var bottomMiddleBouncer : SKNode?
-    private var bottomLeftBouncer : SKNode?
+    private var topRightBucket : SKSpriteNode?
+    private var topMiddleBucket : SKSpriteNode?
+    private var topLeftBucket : SKSpriteNode?
 
     override func sceneDidLoad() {
 
@@ -31,9 +31,9 @@ class GameScene: SKScene {
         bottomRightBucket = self.childNode(withName: "bottomRightBucket") as? SKSpriteNode
         bottomMiddleBucket = self.childNode(withName: "bottomMiddleBucket") as? SKSpriteNode
         bottomLeftBucket = self.childNode(withName: "bottomLeftBucket") as? SKSpriteNode
-        bottomRightBouncer = self.childNode(withName: "bottomRightBucket") as? SKSpriteNode
-        bottomMiddleBouncer = self.childNode(withName: "bottomMiddleBucket") as? SKSpriteNode
-        bottomLeftBouncer = self.childNode(withName: "bottomLeftBucket") as? SKSpriteNode
+        topRightBucket = self.childNode(withName: "topRightBucket") as? SKSpriteNode
+        topMiddleBucket = self.childNode(withName: "topMiddleBucket") as? SKSpriteNode
+        topLeftBucket = self.childNode(withName: "topLeftBucket") as? SKSpriteNode
         // Get label node from scene and store it for use later
 //        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
 //        if let label = self.label {
@@ -95,7 +95,18 @@ class GameScene: SKScene {
         }
         
         self.lastUpdateTime = currentTime
-        
+        if let ballBody = ball?.physicsBody, let bottomMidBucketBody = bottomMiddleBucket?.physicsBody, let topMidBucketBody = topMiddleBucket?.physicsBody {
+            if ballBody.allContactedBodies().contains(bottomMidBucketBody) || ballBody.allContactedBodies().contains(topMidBucketBody) {
+                let world = self.physicsWorld
+                if world.gravity.dy < CGFloat(0.0) {
+                    world.gravity = CGVector.init(dx: 0.0, dy: 9.8) // CGVectorMake(0.0, 9.8)
+                } else {
+                    world.gravity = CGVector.init(dx: 0.0, dy: -9.8) // CGVectorMake(0.0, -9.8)
+                }
+                
+            }
+        }
         
     }
 }
+
